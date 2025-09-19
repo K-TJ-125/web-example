@@ -1,0 +1,16 @@
+.root {
+  height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.name-container {
+  display: flex;
+  gap: 5px;
+}
+.name-container h4 {
+  color: #1976d2;
+}

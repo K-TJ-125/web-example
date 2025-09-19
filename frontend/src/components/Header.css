@@ -1,0 +1,15 @@
+header {
+  height: 60px;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2e82d6;
+  color: white;
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.25);
+}
+
+header h1,
+header h2 {
+  cursor: pointer;
+}
