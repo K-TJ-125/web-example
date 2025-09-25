@@ -1,3 +1,4 @@
+
 import "./Main.css";
 import Button from "../components/Button";
 import { useNavigate } from "react-router";
@@ -7,6 +8,7 @@ import { useState, useEffect } from "react";
 
 function Main() {
   const navigate = useNavigate(); // 페이지 이동 함수
+
 
   const [name, setName] = useState(""); // 닉네임 상태 변수
   const [serverMessage, setServerMessage] = useState(""); // 서버 메시지 상태
@@ -65,11 +67,11 @@ function Main() {
         />
       </div>
 
-      <Button onClick={() => navigate(`/chat?name=${name || "Guest"}`)}>
+      <Button onClick={() => navigate(`/chat?name=${name || 'Guest'}`)}>
         채팅 시작하기
       </Button>
     </div>
   );
 }
-
+// testname
 export default Main;
