@@ -3,7 +3,7 @@ import "./Chat.css";
 import Button from "../components/Button";
 import { useState } from "react";
 import axios from "axios";
-
+// 주석 추가 00
 function Chat() {
   const location = useLocation(); // URL 정보 추출 함수
   const urlParams = new URLSearchParams(location.search); // 쿼리 파라미터를 쉽게 다루기 위한 객체
