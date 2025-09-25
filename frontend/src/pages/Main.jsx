@@ -1,14 +1,14 @@
-import "./Main.css";
-import Button from "../components/Button";
-import { useNavigate } from "react-router";
-import { useState } from "react";
+import './Main.css';
+import Button from '../components/Button';
+import { useNavigate } from 'react-router';
+import { useState } from 'react';
 
 // 메인 페이지 컴포넌트
 
 function Main() {
   const navigate = useNavigate(); // 페이지 이동 함수
 
-  const [name, setName] = useState(""); // 닉네임 상태 변수
+  const [name, setName] = useState(''); // 닉네임 상태 변수
 
   // 닉네임 입력 처리 함수
   function handleNameChange(event) {
@@ -29,11 +29,11 @@ function Main() {
         />
       </div>
 
-      <Button onClick={() => navigate(`/chat?name=${name || "Guest"}`)}>
+      <Button onClick={() => navigate(`/chat?name=${name || 'Guest'}`)}>
         채팅 시작하기
       </Button>
     </div>
   );
 }
-
+// testname
 export default Main;
