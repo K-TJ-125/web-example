@@ -5,7 +5,7 @@ import OpenAI from "openai";
 
 // env 파일 로드
 dotenv.config();
-
+//hi
 // 서버 실행 포트
 const PORT = Number(process.env.SERVER_PORT);
 
