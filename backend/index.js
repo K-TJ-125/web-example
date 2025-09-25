@@ -23,12 +23,6 @@ app.get("/", (req, res) => {
   res.send("Web Example Server!");
 });
 
-// 서버 시작
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`서버가 ${PORT}번 포트에서 실행 중입니다.`);
-});
-
-
 app.post("/chat", async (req, res) => {
   const { name, message } = req.body;
   console.log(`프론트엔드로부터 메시지 수신! ${name}: ${message}`);
@@ -68,3 +62,7 @@ app.get("/status", (req, res) => {
 });
 
 
+// 서버 시작
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`서버가 ${PORT}번 포트에서 실행 중입니다.`);
+});
