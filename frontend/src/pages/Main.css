@@ -14,3 +14,22 @@
 .name-container h4 {
   color: #1976d2;
 }
+
+.server-status {
+  margin: 20px 0;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.server-status .success {
+  color: #28a745;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+
+.server-status .error {
+  color: #dc3545;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
