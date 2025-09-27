@@ -1,16 +1,39 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+  const navigate = useNavigate();
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    // 로그인 처리
-    console.log("로그인 시도:", email, password);
-  }
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      console.log("Submitting form:", form);
+      const res = await fetch("http://localhost:3000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (res.ok) {
+        alert("로그인 성공!");
+        // TODO: 메인 페이지 등으로 이동하려면 아래 사용
+        // navigate("/");
+      } else {
+        const data = await res.json();
+        alert(data.message || "로그인 실패");
+      }
+    } catch (err) {
+      alert("서버 오류");
+    }
+  };
 
   return (
     <div className="hackerton-container nexon-style">
@@ -18,17 +41,21 @@ function Login() {
       <form onSubmit={handleSubmit} className="nexon-form">
         <input
           type="email"
+          name="email"
           className="nexon-input"
           placeholder="이메일을 입력하세요"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={form.email}
+          onChange={handleChange}
+          required
         />
         <input
           type="password"
+          name="password"
           className="nexon-input"
           placeholder="비밀번호를 입력하세요"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={form.password}
+          onChange={handleChange}
+          required
         />
         <button type="submit" className="nexon-login-btn">
           로그인
