@@ -38,67 +38,83 @@ function Register() {
   };
 
   return (
-    <div className="hackerton-container nexon-style">
-      <div className="logo">회원가입</div>
-      <form onSubmit={handleSubmit} className="nexon-form">
-        <input
-          type="text"
-          className="nexon-input"
-          placeholder="이름을 입력하세요"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="email"
-          className="nexon-input"
-          placeholder="학교 이메일을 입력하세요"
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          className="nexon-input"
-          placeholder="비밀번호를 입력하세요"
-          name="password"
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit" className="nexon-login-btn">
-          회원가입
-        </button>
-      </form>
-      {alertMsg && (
-        <div className="modal-backdrop">
-          <div className="modal">
-            <p>{alertMsg}</p>
-            <button onClick={() => setAlertMsg("")} className="nexon-login-btn">
-              닫기
-            </button>
+    <>
+      <div
+        style={{
+          width: "100%",
+          textAlign: "center",
+          margin: "60px 0 20px 0",
+        }}
+      >
+        <span className="main-link" onClick={() => navigate("/login")}>
+          캠퍼스 재능 나눔
+        </span>
+      </div>
+      <div className="hackerton-container nexon-style">
+        <div className="logo">회원가입</div>
+        <form onSubmit={handleSubmit} className="nexon-form">
+          <input
+            type="text"
+            className="nexon-input"
+            placeholder="이름을 입력하세요"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="email"
+            className="nexon-input"
+            placeholder="학교 이메일을 입력하세요"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            className="nexon-input"
+            placeholder="비밀번호를 입력하세요"
+            name="password"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
+          <button type="submit" className="nexon-login-btn">
+            회원가입
+          </button>
+        </form>
+        {alertMsg && (
+          <div className="modal-backdrop">
+            <div className="modal">
+              <p>{alertMsg}</p>
+              <button
+                onClick={() => setAlertMsg("")}
+                className="nexon-login-btn"
+              >
+                닫기
+              </button>
+            </div>
           </div>
-        </div>
-      )}
-      {isComplete && (
-        <div className="modal-backdrop">
-          <div className="modal">
-            <p>회원가입이 완료되었습니다</p>
-            <button
-              onClick={() => {
-                setIsComplete(false);
-                navigate("/hackerton");
-              }}
-              className="nexon-login-btn"
-            >
-              닫기
-            </button>
+        )}
+        {isComplete && (
+          <div className="modal-backdrop">
+            <div className="modal">
+              <p>회원가입이 완료되었습니다</p>
+              <button
+                onClick={() => {
+                  setIsComplete(false);
+                  navigate("/hackerton");
+                }}
+                className="nexon-login-btn"
+              >
+                닫기
+              </button>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }
 
