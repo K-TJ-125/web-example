@@ -1,3 +1,5 @@
+
+
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -186,35 +188,159 @@ app.post("/api/knowledge-bot", async (req, res) => {
 });
 
 // 재능 질문 5개 생성 API
-app.post("/api/talent-questions", (req, res) => {
+app.post("/api/talent-questions", async (req, res) => {
   const { talent } = req.body;
   if (!talent) return res.status(400).json({ message: "재능이 필요합니다." });
-  // 실제 OpenAI 연동 가능, 예시는 하드코딩
-  const exampleQuestions = [
-    `${talent}의 기본 개념을 알고 있나요?`,
-    `${talent}의 기초 기술을 실습해 본 적이 있나요?`,
-    `${talent} 관련 중급 과제를 해결할 수 있나요?`,
-    `${talent}을(를) 활용해 프로젝트를 해본 경험이 있나요?`,
-    `${talent}을(를) 남에게 가르칠 수 있나요?`
-  ];
-  res.json({ questions: exampleQuestions });
+  try {
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    const prompt = `
+"${talent}"에 대해 본인의 지식 수준을 1~5단계로 구분할 수 있는 5개의 질문을 만들어줘.
+각 질문은 매우 아님, 아님, 맞음, 매우 맞음 4지선다로 답할 수 있어야 해.
+아래와 같은 JSON 배열만, 다른 말 없이, 코드블록 없이, 반드시 반환해줘.
+예시: [
+  {"question": "기본 개념을 알고 있나요?"},
+  {"question": "기초 기술을 실습해 본 적이 있나요?"},
+  {"question": "중급 과제를 해결할 수 있나요?"},
+  {"question": "프로젝트를 해본 경험이 있나요?"},
+  {"question": "남에게 가르칠 수 있나요?"}
+]
+`;
+
+    const response = await openai.responses.create({
+      model: "gpt-4o-mini",
+      input: [
+        {
+          role: "system",
+          content:
+            "너는 재능 수준 평가 질문을 만드는 AI야. 반드시 JSON 배열로만 답해.",
+        },
+        { role: "user", content: prompt },
+      ],
+      max_output_tokens: 1024,
+      temperature: 0.7,
+    });
+
+    let output = response.output_text.trim();
+
+    // 코드블록(````json ... ````)이 있을 경우 추출
+    const codeBlockMatch = output.match(/```json([\s\S]*?)```/i);
+    if (codeBlockMatch) {
+      output = codeBlockMatch[1].trim();
+    }
+
+    // JSON 배열 부분만 추출
+    const match = output.match(/\[([\s\S]*?)\]/);
+    let questions = [];
+    if (match) {
+      try {
+        questions = JSON.parse("[" + match[1] + "]");
+      } catch (e) {
+        return res
+          .status(500)
+          .json({ message: "AI 응답 파싱 실패", raw: output });
+      }
+    } else {
+      return res
+        .status(500)
+        .json({ message: "AI 응답에 JSON 배열이 없습니다.", raw: output });
+    }
+
+    res.json({ questions });
+  } catch (err) {
+    console.error("[재능 질문 AI 오류]", err);
+    res.status(500).json({ message: "질문 생성 실패" });
+  }
 });
 
-// 재능 답변 및 수준 저장 API
+// 재능 수준 저장 API
 app.post("/api/save-talent", (req, res) => {
   const { email, talent, talentQuestions, talentAnswers, talentLevel } = req.body;
-  if (!email || !talent || !talentQuestions || !talentAnswers || talentLevel === undefined) {
+  if (!email || !talent || !talentQuestions || !talentAnswers || !talentLevel) {
     return res.status(400).json({ message: "필수 정보 누락" });
   }
+
   const users = readUsers();
   const idx = users.findIndex((u) => u.email === email);
-  if (idx === -1) return res.status(404).json({ message: "사용자 없음" });
+  if (idx === -1) {
+    return res.status(404).json({ message: "사용자 없음" });
+  }
+
   users[idx].talent = talent;
   users[idx].talentQuestions = talentQuestions;
   users[idx].talentAnswers = talentAnswers;
-  users[idx].talentLevel = talentLevel; // 1~5단계
+  users[idx].talentLevel = talentLevel;
   writeUsers(users);
-  res.json({ message: "저장 완료" });
+
+  res.json({ success: true });
+});
+
+app.get("/api/user-talent", (req, res) => {
+  const email = req.query.email;
+  if (!email) return res.status(400).json({ message: "이메일 필요" });
+  const users = readUsers();
+  const user = users.find((u) => u.email === email);
+  if (!user) return res.status(404).json({ message: "사용자 없음" });
+  res.json({
+    talent: user.talent || null,
+    talentLevel: user.talentLevel || null,
+  });
+});
+
+// rooms.json 파일 경로
+const roomsFile = path.join(process.cwd(), "rooms.json");
+
+// 유틸: rooms.json 읽기/쓰기
+function readRooms() {
+  try {
+    const data = fs.readFileSync(roomsFile, "utf-8");
+    return data ? JSON.parse(data) : [];
+  } catch {
+    return [];
+  }
+}
+function writeRooms(rooms) {
+  fs.writeFileSync(roomsFile, JSON.stringify(rooms, null, 2));
+}
+
+// 궁금한 재능으로 방 찾기/생성 API
+app.post("/api/find-or-create-room", (req, res) => {
+  const { talent, guestEmail, guestTalent } = req.body;
+  if (!talent || !guestEmail || !guestTalent) {
+    return res.status(400).json({ message: "기부 재능, 게스트 이메일, 배우고자 하는 재능 모두 필요" });
+  }
+  // 1. 이미 해당 재능의 방이 있는지 확인 (게스트가 아직 없는 방만, guestTalent도 일치해야 함)
+  let rooms = readRooms();
+  let room = rooms.find(
+    (r) => r.talent === talent && r.guestTalent === guestTalent && (!r.guestEmail || r.guestEmail === guestEmail)
+  );
+  if (room) {
+    // 게스트가 아직 없는 방이면 게스트로 등록
+    if (!room.guestEmail) {
+      room.guestEmail = guestEmail;
+      writeRooms(rooms);
+    }
+    return res.json({ room, created: false });
+  }
+  // 2. 해당 재능을 가진 유저(방장) 찾기 (레벨 높은 순)
+  const users = readUsers();
+  const host = users
+    .filter((u) => u.talent === talent && u.talentLevel)
+    .sort((a, b) => b.talentLevel - a.talentLevel)[0];
+  if (!host) {
+    return res.status(404).json({ message: "해당 재능을 가진 사용자가 없습니다." });
+  }
+  // 3. 방 생성 (guestTalent 포함)
+  const newRoom = {
+    id: Date.now(),
+    talent, // 기부 재능
+    hostEmail: host.email,
+    hostTalentLevel: host.talentLevel,
+    guestEmail,
+    guestTalent, // 배우고자 하는 재능
+  };
+  rooms.push(newRoom);
+  writeRooms(rooms);
+  res.json({ room: newRoom, created: true });
 });
 
 // 서버 시작

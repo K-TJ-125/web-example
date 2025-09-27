@@ -17,6 +17,10 @@ function Login() {
         body: JSON.stringify({ email, password }),
       });
       if (res.ok) {
+        const data = await res.json();
+        // localStorage에 사용자 정보 저장
+        localStorage.setItem("userEmail", data.user.email);
+        localStorage.setItem("userName", data.user.name);
         alert("로그인 성공!");
         navigate("/"); // 로그인 성공 시 메인 페이지로 이동
       } else {
