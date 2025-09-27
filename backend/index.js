@@ -1,5 +1,4 @@
 
-
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -305,20 +304,15 @@ function writeRooms(rooms) {
 // 궁금한 재능으로 방 찾기/생성 API
 app.post("/api/find-or-create-room", (req, res) => {
   const { talent, guestEmail, guestTalent } = req.body;
-  if (!talent || !guestEmail || !guestTalent) {
-    return res.status(400).json({ message: "기부 재능, 게스트 이메일, 배우고자 하는 재능 모두 필요" });
+  if (!talent || !guestTalent) {
+    return res.status(400).json({ message: "기부 재능과 배우고자 하는 재능 모두 필요" });
   }
   // 1. 이미 해당 재능의 방이 있는지 확인 (게스트가 아직 없는 방만, guestTalent도 일치해야 함)
   let rooms = readRooms();
   let room = rooms.find(
-    (r) => r.talent === talent && r.guestTalent === guestTalent && (!r.guestEmail || r.guestEmail === guestEmail)
+    (r) => r.talent === talent && r.guestTalent === guestTalent && (!r.guestEmail)
   );
   if (room) {
-    // 게스트가 아직 없는 방이면 게스트로 등록
-    if (!room.guestEmail) {
-      room.guestEmail = guestEmail;
-      writeRooms(rooms);
-    }
     return res.json({ room, created: false });
   }
   // 2. 해당 재능을 가진 유저(방장) 찾기 (레벨 높은 순)
@@ -329,18 +323,44 @@ app.post("/api/find-or-create-room", (req, res) => {
   if (!host) {
     return res.status(404).json({ message: "해당 재능을 가진 사용자가 없습니다." });
   }
-  // 3. 방 생성 (guestTalent 포함)
+  // 3. 방 생성 (guestTalent 포함, guestEmail은 빈 문자열)
   const newRoom = {
     id: Date.now(),
     talent, // 기부 재능
     hostEmail: host.email,
     hostTalentLevel: host.talentLevel,
-    guestEmail,
+    guestEmail: "",
     guestTalent, // 배우고자 하는 재능
   };
   rooms.push(newRoom);
   writeRooms(rooms);
   res.json({ room: newRoom, created: true });
+});
+
+// 모든 방 정보 조회 API
+app.get("/api/rooms", (req, res) => {
+  const rooms = readRooms();
+  res.json({ rooms });
+});
+
+// 방에 게스트로 입장 (게스트 이메일 등록)
+app.post("/api/rooms/:roomId/join", (req, res) => {
+  const { roomId } = req.params;
+  const { guestEmail } = req.body;
+  if (!guestEmail) {
+    return res.status(400).json({ message: "게스트 이메일 필요" });
+  }
+  let rooms = readRooms();
+  const idx = rooms.findIndex((r) => String(r.id) === String(roomId));
+  if (idx === -1) {
+    return res.status(404).json({ message: "방을 찾을 수 없습니다." });
+  }
+  if (rooms[idx].guestEmail) {
+    return res.status(400).json({ message: "이미 게스트가 입장한 방입니다." });
+  }
+  rooms[idx].guestEmail = guestEmail;
+  writeRooms(rooms);
+  res.json({ success: true });
 });
 
 // 서버 시작
