@@ -1,13 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import TalentTest from "./TalentTest";
 import { useNavigate } from "react-router-dom";
 import "./MainPage.css";
 
 function MainPage() {
-  const [searchKeyword, setSearchKeyword] = useState("");
-  const [selectedJobType, setSelectedJobType] = useState("모든 직군");
-  const [selectedLocation, setSelectedLocation] = useState("모든 지역/시");
-  const [selectedCareer, setSelectedCareer] = useState("모든 고용형태");
+  // const [searchKeyword, setSearchKeyword] = useState("");
+  // const [selectedJobType, setSelectedJobType] = useState("모든 직군");
+  // const [selectedLocation, setSelectedLocation] = useState("모든 지역/시");
+  // const [selectedCareer, setSelectedCareer] = useState("모든 고용형태");
+  const [talentInfo, setTalentInfo] = useState(null);
+  const userEmail = localStorage.getItem("userEmail");
+  const [userName, setUserName] = useState(localStorage.getItem("userName"));
   const navigate = useNavigate();
+
+  // TalentTest 모달 상태
+  const [showTalentTest, setShowTalentTest] = useState(false);
+  const [talentInput, setTalentInput] = useState("");
+
+  // 로그아웃
+  const handleLogout = () => {
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userName");
+    setUserName("");
+    alert("로그아웃 성공!");
+    navigate("/");
+  };
+
+  useEffect(() => {
+    if (!userEmail) return;
+    fetch(
+      `http://localhost:3000/api/user-talent?email=${encodeURIComponent(
+        userEmail
+      )}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.talent && data.talentLevel) setTalentInfo(data);
+      });
+  }, [userEmail]);
 
   const jobListings = [
     {
@@ -87,15 +117,31 @@ function MainPage() {
           </div>
           <nav className="nav">
             <div className="auth-buttons">
-              <button className="login-btn" onClick={() => navigate("/login")}>
-                로그인
-              </button>
-              <button
-                className="signup-btn"
-                onClick={() => navigate("/register")}
-              >
-                회원가입
-              </button>
+              {userName ? (
+                <>
+                  <span style={{ marginRight: 12, fontWeight: 600 }}>
+                    {userName}님
+                  </span>
+                  <button className="login-btn" onClick={handleLogout}>
+                    로그아웃
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    className="login-btn"
+                    onClick={() => navigate("/login")}
+                  >
+                    로그인
+                  </button>
+                  <button
+                    className="signup-btn"
+                    onClick={() => navigate("/register")}
+                  >
+                    회원가입
+                  </button>
+                </>
+              )}
             </div>
           </nav>
         </div>
@@ -108,6 +154,16 @@ function MainPage() {
             국가를 넘어 재능을 교환하는 여정,
             <br />이 유난한 도전에 함께할 동료를 찾습니다
           </h1>
+          {/* 여기에 추가! */}
+          {talentInfo && (
+            <div style={{ margin: "24px 0", fontWeight: 600 }}>
+              내 재능:{" "}
+              <span style={{ color: "#010101ff" }}>{talentInfo.talent}</span>
+              {" / "}
+              레벨:{" "}
+              <span style={{ color: "#010202ff" }}>{talentInfo.talentLevel}</span>
+            </div>
+          )}
 
           {/* 첫 번째 검색 바 */}
           <div className="search-container">
@@ -115,13 +171,33 @@ function MainPage() {
               <input
                 type="text"
                 placeholder="당신의 재능은 무엇인가요?"
-                value={searchKeyword}
-                onChange={(e) => setSearchKeyword(e.target.value)}
+                value={talentInput}
+                onChange={(e) => setTalentInput(e.target.value)}
                 className="search-input"
               />
             </div>
-            <button className="search-btn">수준 확인</button>
+            <button
+              className="search-btn"
+              onClick={() => {
+                if (!talentInput.trim()) {
+                  alert("재능을 입력해주세요.");
+                  return;
+                }
+                setShowTalentTest(true);
+              }}
+            >
+              수준 확인
+            </button>
           </div>
+          {/* 재능 수준 확인 모달 */}
+          {showTalentTest && (
+            <div style={{ marginTop: 32 }}>
+              <TalentTest
+                talent={talentInput}
+                onClose={() => setShowTalentTest(false)}
+              />
+            </div>
+          )}
 
           {/* 두 번째 검색 바 */}
           <div className="search-container secondary-search">
