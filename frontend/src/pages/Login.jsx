@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 function Login() {
@@ -16,7 +16,6 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("Submitting form:", form);
       const res = await fetch("http://localhost:3000/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -24,8 +23,7 @@ function Login() {
       });
       if (res.ok) {
         alert("로그인 성공!");
-        // TODO: 메인 페이지 등으로 이동하려면 아래 사용
-        // navigate("/");
+        navigate("/"); // 로그인 성공 시 메인 페이지로 이동
       } else {
         const data = await res.json();
         alert(data.message || "로그인 실패");
@@ -37,7 +35,7 @@ function Login() {
 
   return (
     <div className="hackerton-container nexon-style">
-      <div className="logo">LOGIN</div>
+      <div className="logo">로그인</div>
       <form onSubmit={handleSubmit} className="nexon-form">
         <input
           type="email"
@@ -61,12 +59,34 @@ function Login() {
           로그인
         </button>
       </form>
-      <div className="nexon-links">
-        <Link to="/register">회원가입</Link>
-        <span>·</span>
-        <Link to="/find-id">아이디 찾기</Link>
-        <span>·</span>
-        <Link to="/find-password">비밀번호 찾기</Link>
+      <button
+        className="nexon-login-btn"
+        style={{ width: "100%", marginTop: 8 }}
+        onClick={() => navigate("/register")}
+      >
+        회원가입
+      </button>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: 8,
+        }}
+      >
+        <button
+          className="nexon-login-btn"
+          style={{ width: "48%" }}
+          onClick={() => navigate("/find-id")}
+        >
+          아이디 찾기
+        </button>
+        <button
+          className="nexon-login-btn"
+          style={{ width: "48%" }}
+          onClick={() => navigate("/find-password")}
+        >
+          비밀번호 찾기
+        </button>
       </div>
     </div>
   );

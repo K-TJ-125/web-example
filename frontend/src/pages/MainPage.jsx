@@ -1,77 +1,79 @@
-import React, { useState } from 'react';
-import './MainPage.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./MainPage.css";
 
 function MainPage() {
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [selectedJobType, setSelectedJobType] = useState('모든 직군');
-  const [selectedLocation, setSelectedLocation] = useState('모든 지역/시');
-  const [selectedCareer, setSelectedCareer] = useState('모든 고용형태');
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [selectedJobType, setSelectedJobType] = useState("모든 직군");
+  const [selectedLocation, setSelectedLocation] = useState("모든 지역/시");
+  const [selectedCareer, setSelectedCareer] = useState("모든 고용형태");
+  const navigate = useNavigate();
 
   const jobListings = [
     {
       id: 1,
-      title: '10월 신입 Insurance advisor과정 (서울/대전/전주/부산)',
-      company: '비즈니스 • 보험영업 • 보험설계 • 상담 • 손해보험',
-      category: '한화손보',
-      tags: ['중급'],
+      title: "10월 신입 Insurance advisor과정 (서울/대전/전주/부산)",
+      company: "비즈니스 • 보험영업 • 보험설계 • 상담 • 손해보험",
+      category: "한화손보",
+      tags: ["중급"],
     },
     {
       id: 2,
-      title: 'Compliance Manager',
-      company: '컴플라이언스 • 준법감시 • 내부통제',
-      category: '중급',
-      tags: ['중급'],
+      title: "Compliance Manager",
+      company: "컴플라이언스 • 준법감시 • 내부통제",
+      category: "중급",
+      tags: ["중급"],
     },
     {
       id: 3,
-      title: 'Executive Assistant',
-      company: 'EA • 임원지원 • 어시스턴트',
-      category: '초급',
-      tags: ['중급'],
+      title: "Executive Assistant",
+      company: "EA • 임원지원 • 어시스턴트",
+      category: "초급",
+      tags: ["중급"],
     },
     {
       id: 4,
-      title: 'Finance Director',
-      company: '재무 • 회계 • FP&A • 리더십',
-      category: '시니어',
+      title: "Finance Director",
+      company: "재무 • 회계 • FP&A • 리더십",
+      category: "시니어",
       tags: [],
     },
     {
       id: 5,
-      title: 'Site Manager (부산센터)',
-      company: '센터장 • 컬렉센터 • BPO • 인하우스 • 부산 • 지사장',
-      category: '시니어',
+      title: "Site Manager (부산센터)",
+      company: "센터장 • 컬렉센터 • BPO • 인하우스 • 부산 • 지사장",
+      category: "시니어",
       tags: [],
     },
     {
       id: 6,
-      title: '보험설계사 (위촉직 대면 FC, 정직)',
-      company: '비즈니스 • 보험영업 • 보험설계 • 상담 • 손해보험',
-      category: '한화손보',
+      title: "보험설계사 (위촉직 대면 FC, 정직)",
+      company: "비즈니스 • 보험영업 • 보험설계 • 상담 • 손해보험",
+      category: "한화손보",
       tags: [],
     },
     {
       id: 7,
-      title: 'FP&A Director',
-      company: 'FP&A • 재무관리업 • 재무회계 • 재무분석',
-      category: '토스',
+      title: "FP&A Director",
+      company: "FP&A • 재무관리업 • 재무회계 • 재무분석",
+      category: "토스",
       tags: [],
     },
   ];
 
   const newsItems = [
     {
-      title: '공입업이 성장하는 토스 파이낸터 탐험들의 이야기',
-      date: '2025.09.24',
+      title: "공입업이 성장하는 토스 파이낸터 탐험들의 이야기",
+      date: "2025.09.24",
     },
     {
-      title: '복잡한 금융 데이터를 시각적 컨텐츠로 풀어내는 토스증권 AI Silo',
-      date: '2025.09.24',
+      title: "복잡한 금융 데이터를 시각적 컨텐츠로 풀어내는 토스증권 AI Silo",
+      date: "2025.09.24",
     },
     {
       title:
-        '초 단위로 응답하는 데이터, 그 뒤에 있는 토스증권 Realtime Data Team',
-      date: '2025.09.24',
+        "초 단위로 응답하는 데이터, 그 뒤에 있는 토스증권 Realtime Data Team",
+      date: "2025.09.24",
     },
   ];
 
@@ -91,8 +93,15 @@ function MainPage() {
               개발자 소개
             </a>
             <div className="auth-buttons">
-              <button className="login-btn">로그인</button>
-              <button className="signup-btn">회원가입</button>
+              <button className="login-btn" onClick={() => navigate("/login")}>
+                로그인
+              </button>
+              <button
+                className="signup-btn"
+                onClick={() => navigate("/register")}
+              >
+                회원가입
+              </button>
             </div>
           </nav>
         </div>
