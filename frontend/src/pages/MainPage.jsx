@@ -39,71 +39,123 @@ function MainPage() {
       });
   }, [userEmail]);
 
-  const jobListings = [
+  // 상위 8개 재능
+  const topTalentListings = [
     {
       id: 1,
-      title: "10월 신입 Insurance advisor과정 (서울/대전/전주/부산)",
-      company: "비즈니스 • 보험영업 • 보험설계 • 상담 • 손해보험",
-      category: "한화손보",
-      tags: ["중급"],
+      title: "포토샵",
+      category: "디자인",
+      platform: "PC",
+      tags: ["초급"],
     },
     {
       id: 2,
-      title: "Compliance Manager",
-      company: "컴플라이언스 • 준법감시 • 내부통제",
-      category: "중급",
+      title: "영어회화",
+      category: "언어",
+      platform: "MOBILE",
       tags: ["중급"],
     },
     {
       id: 3,
-      title: "Executive Assistant",
-      company: "EA • 임원지원 • 어시스턴트",
-      category: "초급",
-      tags: ["중급"],
+      title: "기타연주",
+      category: "음악",
+      platform: "PC",
+      tags: ["고급"],
     },
     {
       id: 4,
-      title: "Finance Director",
-      company: "재무 • 회계 • FP&A • 리더십",
-      category: "시니어",
-      tags: [],
+      title: "요리",
+      category: "생활",
+      platform: "MOBILE",
+      tags: ["초급"],
     },
     {
       id: 5,
-      title: "Site Manager (부산센터)",
-      company: "센터장 • 컬렉센터 • BPO • 인하우스 • 부산 • 지사장",
-      category: "시니어",
-      tags: [],
+      title: "프로그래밍",
+      category: "개발",
+      platform: "PC",
+      tags: ["중급"],
     },
     {
       id: 6,
-      title: "보험설계사 (위촉직 대면 FC, 정직)",
-      company: "비즈니스 • 보험영업 • 보험설계 • 상담 • 손해보험",
-      category: "한화손보",
-      tags: [],
+      title: "댄스",
+      category: "운동",
+      platform: "MOBILE",
+      tags: ["초급"],
     },
     {
       id: 7,
-      title: "FP&A Director",
-      company: "FP&A • 재무관리업 • 재무회계 • 재무분석",
-      category: "토스",
-      tags: [],
+      title: "일본어",
+      category: "언어",
+      platform: "PC",
+      tags: ["고급"],
+    },
+    {
+      id: 8,
+      title: "그림그리기",
+      category: "예술",
+      platform: "MOBILE",
+      tags: ["중급"],
     },
   ];
 
-  const newsItems = [
+  // 하위 8개 재능
+  const bottomTalentListings = [
     {
-      title: "공입업이 성장하는 토스 파이낸터 탐험들의 이야기",
-      date: "2025.09.24",
+      id: 9,
+      title: "피아노",
+      category: "음악",
+      platform: "PC",
+      tags: ["고급"],
     },
     {
-      title: "복잡한 금융 데이터를 시각적 컨텐츠로 풀어내는 토스증권 AI Silo",
-      date: "2025.09.24",
+      id: 10,
+      title: "중국어",
+      category: "언어",
+      platform: "MOBILE",
+      tags: ["초급"],
     },
     {
-      title:
-        "초 단위로 응답하는 데이터, 그 뒤에 있는 토스증권 Realtime Data Team",
-      date: "2025.09.24",
+      id: 11,
+      title: "웹디자인",
+      category: "디자인",
+      platform: "PC",
+      tags: ["중급"],
+    },
+    {
+      id: 12,
+      title: "베이킹",
+      category: "생활",
+      platform: "MOBILE",
+      tags: ["초급"],
+    },
+    {
+      id: 13,
+      title: "영상편집",
+      category: "미디어",
+      platform: "PC",
+      tags: ["고급"],
+    },
+    {
+      id: 14,
+      title: "요가",
+      category: "운동",
+      platform: "MOBILE",
+      tags: ["중급"],
+    },
+    {
+      id: 15,
+      title: "스페인어",
+      category: "언어",
+      platform: "PC",
+      tags: ["초급"],
+    },
+    {
+      id: 16,
+      title: "캘리그라피",
+      category: "예술",
+      platform: "MOBILE",
+      tags: ["고급"],
     },
   ];
 
@@ -216,55 +268,73 @@ function MainPage() {
       {/* 메인 콘텐츠 */}
       <main className="main-content">
         <div className="content-container">
-          {/* 채용 공고 섹션 */}
-          <section className="job-section">
-            <h2 className="section-title">312개의 포지션이 열려있어요.</h2>
-
-            <div className="job-listings">
-              {jobListings.map((job) => (
-                <div key={job.id} className="job-card">
-                  <div className="job-info">
-                    <h3 className="job-title">{job.title}</h3>
-                    <p className="job-company">{job.company}</p>
-                  </div>
-                  <div className="job-tags">
-                    <span className="job-category">{job.category}</span>
-                    {job.tags.map((tag, index) => (
-                      <span key={index} className="job-tag">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* 사이드바 */}
-          <aside className="sidebar">
-            {/* 특별 채용 이벤트 */}
-            <div className="sidebar-card special-event">
-              <div className="event-content">
-                <h3>토스 커뮤니티 전력군 대규모 경력 채용 &gt;</h3>
-                <p className="event-time">9.17 (수) - 9.30 (월)</p>
-              </div>
-            </div>
-
-            {/* 새로운 아티클 */}
-            <div className="sidebar-card">
-              <h3 className="sidebar-title">
-                새로운 아티클 <span className="more-link">전체 보기 &gt;</span>
-              </h3>
-              <div className="news-list">
-                {newsItems.map((item, index) => (
-                  <div key={index} className="news-item">
-                    <h4 className="news-title">{item.title}</h4>
-                    <p className="news-date">{item.date}</p>
+          {/* 좌우로 나란히 배치 */}
+          <div className="talent-sections-row">
+            {/* 좌측: 재능 기부의 방 */}
+            <section className="talent-section">
+              <h2 className="section-title">재능 기부의 방</h2>
+              <div className="talent-grid">
+                {topTalentListings.map((talent) => (
+                  <div key={talent.id} className="talent-card">
+                    <div className="talent-card-header">
+                      <div className="talent-platform-badges">
+                        <span
+                          className={`platform-badge ${talent.platform.toLowerCase()}`}
+                        >
+                          {talent.platform}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="talent-card-content">
+                      <h3 className="talent-card-title">{talent.title}</h3>
+                      <p className="talent-card-category">{talent.category}</p>
+                    </div>
+                    <div className="talent-card-footer">
+                      <div className="talent-card-tags">
+                        {talent.tags.map((tag, index) => (
+                          <span key={index} className="talent-level-tag">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
-            </div>
-          </aside>
+            </section>
+            {/* 우측: 재능 전달의 방 */}
+            <section className="talent-section">
+              <h2 className="section-title">재능 전달의 방</h2>
+              <div className="talent-grid">
+                {bottomTalentListings.map((talent) => (
+                  <div key={talent.id} className="talent-card">
+                    <div className="talent-card-header">
+                      <div className="talent-platform-badges">
+                        <span
+                          className={`platform-badge ${talent.platform.toLowerCase()}`}
+                        >
+                          {talent.platform}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="talent-card-content">
+                      <h3 className="talent-card-title">{talent.title}</h3>
+                      <p className="talent-card-category">{talent.category}</p>
+                    </div>
+                    <div className="talent-card-footer">
+                      <div className="talent-card-tags">
+                        {talent.tags.map((tag, index) => (
+                          <span key={index} className="talent-level-tag">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
         </div>
       </main>
     </div>

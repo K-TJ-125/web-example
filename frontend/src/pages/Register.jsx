@@ -46,7 +46,7 @@ function Register() {
           margin: "60px 0 20px 0",
         }}
       >
-        <span className="main-link" onClick={() => navigate("/login")}>
+        <span className="main-link" onClick={() => navigate("/")}>
           캠퍼스 재능 나눔
         </span>
       </div>
@@ -84,6 +84,12 @@ function Register() {
             회원가입
           </button>
         </form>
+        {/* 회원가입 버튼 아래 로그인 링크 추가 */}
+        <div style={{ textAlign: "center", marginTop: "18px" }}>
+          <span className="main-link" onClick={() => navigate("/login")}>
+            로그인으로
+          </span>
+        </div>
         {alertMsg && (
           <div className="modal-backdrop">
             <div className="modal">

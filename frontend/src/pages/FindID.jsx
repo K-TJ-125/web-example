@@ -27,41 +27,54 @@ function FindID() {
   }
 
   return (
-    <div className="hackerton-container nexon-style">
-      <div className="logo">아이디 찾기</div>
-      <form onSubmit={handleSubmit} className="nexon-form">
-        <input
-          type="email"
-          className="nexon-input"
-          placeholder="아이디를 받을 이메일을 입력하세요"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <button type="submit" className="nexon-login-btn">
-          아이디 찾기
-        </button>
-      </form>
-      {alertMsg && (
-        <div className="modal-backdrop">
-          <div className="modal">
-            <p>{alertMsg}</p>
-            <button onClick={handleCloseAlert} className="nexon-login-btn">
-              닫기
-            </button>
-          </div>
+    <>
+      <div style={{ width: "100%", textAlign: "center", margin: "60px 0 20px 0" }}>
+        <span className="main-link" onClick={() => navigate("/")}>
+          캠퍼스 재능 나눔
+        </span>
+      </div>
+      <div className="hackerton-container nexon-style">
+        <div className="logo">아이디 찾기</div>
+        <form onSubmit={handleSubmit} className="nexon-form">
+          <input
+            type="email"
+            className="nexon-input"
+            placeholder="아이디를 받을 이메일을 입력하세요"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <button type="submit" className="nexon-login-btn">
+            아이디 찾기
+          </button>
+        </form>
+        {/* 로그인으로 링크 추가 */}
+        <div style={{ textAlign: "center", marginTop: "18px" }}>
+          <span className="main-link" onClick={() => navigate("/login")}>
+            로그인으로
+          </span>
         </div>
-      )}
-      {isComplete && (
-        <div className="modal-backdrop">
-          <div className="modal">
-            <p>입력하신 이메일을 확인해 주세요</p>
-            <button onClick={handleCloseComplete} className="nexon-login-btn">
-              닫기
-            </button>
+        {alertMsg && (
+          <div className="modal-backdrop">
+            <div className="modal">
+              <p>{alertMsg}</p>
+              <button onClick={handleCloseAlert} className="nexon-login-btn">
+                닫기
+              </button>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+        {isComplete && (
+          <div className="modal-backdrop">
+            <div className="modal">
+              <p>입력하신 이메일을 확인해 주세요</p>
+              <button onClick={handleCloseComplete} className="nexon-login-btn">
+                닫기
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 
