@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "익1",
+    "email": "test1@school.ac.kr",
+    "password": "1234"
+  },
+  {
+    "id": 1758970326963,
+    "name": "김택준",
+    "email": "gkgk123@school.ac.kr",
+    "password": "1234"
+  },
+  {
+    "id": 1758970376866,
+    "name": "김택준",
+    "email": "1234@school.ac.kr",
+    "password": "1234"
+  },
+  {
+    "id": 1758970655712,
+    "name": "김택준",
+    "email": "1111@aaa.aa.aa",
+    "password": "1234"
+  }
+]
