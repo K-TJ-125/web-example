@@ -195,7 +195,7 @@
 .nexon-login-btn {
     width: 100%;
     padding: 16px 0;
-    background: #3182f6; /* Toss 메인 블루 */
+    background: #000000; /* Toss 메인 블루 */
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -207,7 +207,7 @@
 }
 
 .nexon-login-btn:hover {
-    background: #2563eb; /* 더 진한 Toss 블루 */
+    background: #000000; /* 더 진한 Toss 블루 */
 }
 
 .nexon-links {
@@ -248,4 +248,38 @@
     box-shadow: 0 4px 24px rgba(0,0,0,0.12);
     text-align: center;
     min-width: 240px;
+}
+
+.simple-links {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 0.95rem;
+    color: #888;
+}
+
+.simple-links a {
+    color: #3182f6;
+    text-decoration: underline;
+    margin: 0 4px;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.simple-links span {
+    color: #bbb;
+    margin: 0 4px;
+}
+
+.main-link {
+    font-size: 1.15rem;
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: 900;
+    padding: 4px 0;
+    display: inline-block;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
 }
