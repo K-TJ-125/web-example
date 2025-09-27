@@ -99,66 +99,6 @@ function MainPage() {
     },
   ];
 
-  // 하위 8개 재능
-  const bottomTalentListings = [
-    {
-      id: 9,
-      title: "피아노",
-      category: "음악",
-      platform: "PC",
-      tags: ["고급"],
-    },
-    {
-      id: 10,
-      title: "중국어",
-      category: "언어",
-      platform: "MOBILE",
-      tags: ["초급"],
-    },
-    {
-      id: 11,
-      title: "웹디자인",
-      category: "디자인",
-      platform: "PC",
-      tags: ["중급"],
-    },
-    {
-      id: 12,
-      title: "베이킹",
-      category: "생활",
-      platform: "MOBILE",
-      tags: ["초급"],
-    },
-    {
-      id: 13,
-      title: "영상편집",
-      category: "미디어",
-      platform: "PC",
-      tags: ["고급"],
-    },
-    {
-      id: 14,
-      title: "요가",
-      category: "운동",
-      platform: "MOBILE",
-      tags: ["중급"],
-    },
-    {
-      id: 15,
-      title: "스페인어",
-      category: "언어",
-      platform: "PC",
-      tags: ["초급"],
-    },
-    {
-      id: 16,
-      title: "캘리그라피",
-      category: "예술",
-      platform: "MOBILE",
-      tags: ["고급"],
-    },
-  ];
-
   return (
     <div className="main-page">
       {/* 헤더 */}
@@ -275,38 +215,6 @@ function MainPage() {
               <h2 className="section-title">재능 기부의 방</h2>
               <div className="talent-grid">
                 {topTalentListings.map((talent) => (
-                  <div key={talent.id} className="talent-card">
-                    <div className="talent-card-header">
-                      <div className="talent-platform-badges">
-                        <span
-                          className={`platform-badge ${talent.platform.toLowerCase()}`}
-                        >
-                          {talent.platform}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="talent-card-content">
-                      <h3 className="talent-card-title">{talent.title}</h3>
-                      <p className="talent-card-category">{talent.category}</p>
-                    </div>
-                    <div className="talent-card-footer">
-                      <div className="talent-card-tags">
-                        {talent.tags.map((tag, index) => (
-                          <span key={index} className="talent-level-tag">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-            {/* 우측: 재능 전달의 방 */}
-            <section className="talent-section">
-              <h2 className="section-title">재능 전달의 방</h2>
-              <div className="talent-grid">
-                {bottomTalentListings.map((talent) => (
                   <div key={talent.id} className="talent-card">
                     <div className="talent-card-header">
                       <div className="talent-platform-badges">
