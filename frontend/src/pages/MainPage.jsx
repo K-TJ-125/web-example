@@ -82,16 +82,10 @@ function MainPage() {
       {/* 헤더 */}
       <header className="header">
         <div className="header-container">
-          <div className="logo">
-            <span className="logo-text">중꺾마</span>
+          <div className="logo" style={{ marginBottom: 0 }}>
+            <span className="logo-text">캠퍼스 재능 나눔</span>
           </div>
           <nav className="nav">
-            <a href="#" className="nav-link">
-              사이트 소개
-            </a>
-            <a href="#" className="nav-link">
-              개발자 소개
-            </a>
             <div className="auth-buttons">
               <button className="login-btn" onClick={() => navigate("/login")}>
                 로그인
@@ -115,57 +109,30 @@ function MainPage() {
             <br />이 유난한 도전에 함께할 동료를 찾습니다
           </h1>
 
-          {/* 검색 바 */}
+          {/* 첫 번째 검색 바 */}
           <div className="search-container">
             <div className="search-input-wrapper">
               <input
                 type="text"
-                placeholder="원하는 재능을 검색해보세요"
+                placeholder="당신의 재능은 무엇인가요?"
                 value={searchKeyword}
                 onChange={(e) => setSearchKeyword(e.target.value)}
                 className="search-input"
               />
             </div>
+            <button className="search-btn">수준 확인</button>
+          </div>
 
-            <select
-              value={selectedJobType}
-              onChange={(e) => setSelectedJobType(e.target.value)}
-              className="filter-select"
-            >
-              <option>모든 재능</option>
-              <option>패션</option>
-              <option>스포츠</option>
-              <option>게임</option>
-              <option>역사</option>
-              <option>보컬</option>
-              <option>악기</option>
-            </select>
-
-            <select
-              value={selectedLocation}
-              onChange={(e) => setSelectedLocation(e.target.value)}
-              className="filter-select"
-            >
-              <option>MBTI</option>
-              <option>ISTJ</option>
-              <option>ISFJ</option>
-              <option>INFJ</option>
-              <option>INTJ</option>
-              <option>ISTP</option>
-              <option>ISFP</option>
-              <option>INFP</option>
-              <option>INTP</option>
-              <option>ESTP</option>
-              <option>ESFP</option>
-              <option>ENFP</option>
-              <option>ENTP</option>
-              <option>ESTJ</option>
-              <option>ESFJ</option>
-              <option>ENFJ</option>
-              <option>ENTJ</option>
-            </select>
-
-            <button className="search-btn">초기화</button>
+          {/* 두 번째 검색 바 */}
+          <div className="search-container secondary-search">
+            <div className="search-input-wrapper">
+              <input
+                type="text"
+                placeholder="궁금한 재능이 무엇인가요?"
+                className="search-input"
+              />
+            </div>
+            <button className="search-btn">찾기</button>
           </div>
         </div>
       </section>

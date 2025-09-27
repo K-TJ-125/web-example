@@ -30,18 +30,19 @@
 }
 
 .logo {
+  height: 100%;
   display: flex;
   align-items: center;
   font-size: 20px;
   font-weight: bold;
 }
 
-.logo-icon {
-  margin-right: 8px;
-}
-
 .logo-text {
-  color: #0066ff;
+  background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
 
 .nav {
@@ -125,9 +126,27 @@
 .search-container {
   display: flex;
   gap: 12px;
-  max-width: 800px;
+  max-width: 400px; /* 기존 800px에서 400px로 절반으로 줄임 */
   margin: 0 auto;
   align-items: center;
+}
+
+.secondary-search {
+  margin-top: 20px;
+  max-width: 400px; /* 두 번째 검색 바도 400px로 설정 */
+}
+
+.secondary-search .search-input {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.secondary-search .search-btn {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.secondary-search .search-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .search-input-wrapper {
@@ -148,16 +167,6 @@
   color: #999;
 }
 
-.filter-select {
-  padding: 16px 20px;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  background: white;
-  cursor: pointer;
-  min-width: 120px;
-}
-
 .search-btn {
   padding: 16px 24px;
   background: rgba(255, 255, 255, 0.2);
@@ -167,6 +176,7 @@
   font-size: 14px;
   cursor: pointer;
   transition: background 0.2s;
+  white-space: nowrap; /* 버튼 텍스트가 줄바꿈되지 않도록 */
 }
 
 .search-btn:hover {
@@ -335,6 +345,11 @@
   .search-container {
     flex-direction: column;
     gap: 8px;
+    max-width: 300px; /* 태블릿에서 더 줄임 */
+  }
+
+  .secondary-search {
+    max-width: 300px;
   }
 
   .filter-select,
@@ -354,6 +369,14 @@
 
   .hero-title {
     font-size: 32px;
+  }
+
+  .search-container {
+    max-width: 250px; /* 모바일에서 더 작게 */
+  }
+
+  .secondary-search {
+    max-width: 250px;
   }
 
   .job-card {
