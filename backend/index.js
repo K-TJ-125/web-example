@@ -185,6 +185,38 @@ app.post("/api/knowledge-bot", async (req, res) => {
   }
 });
 
+// 재능 질문 5개 생성 API
+app.post("/api/talent-questions", (req, res) => {
+  const { talent } = req.body;
+  if (!talent) return res.status(400).json({ message: "재능이 필요합니다." });
+  // 실제 OpenAI 연동 가능, 예시는 하드코딩
+  const exampleQuestions = [
+    `${talent}의 기본 개념을 알고 있나요?`,
+    `${talent}의 기초 기술을 실습해 본 적이 있나요?`,
+    `${talent} 관련 중급 과제를 해결할 수 있나요?`,
+    `${talent}을(를) 활용해 프로젝트를 해본 경험이 있나요?`,
+    `${talent}을(를) 남에게 가르칠 수 있나요?`
+  ];
+  res.json({ questions: exampleQuestions });
+});
+
+// 재능 답변 및 수준 저장 API
+app.post("/api/save-talent", (req, res) => {
+  const { email, talent, talentQuestions, talentAnswers, talentLevel } = req.body;
+  if (!email || !talent || !talentQuestions || !talentAnswers || talentLevel === undefined) {
+    return res.status(400).json({ message: "필수 정보 누락" });
+  }
+  const users = readUsers();
+  const idx = users.findIndex((u) => u.email === email);
+  if (idx === -1) return res.status(404).json({ message: "사용자 없음" });
+  users[idx].talent = talent;
+  users[idx].talentQuestions = talentQuestions;
+  users[idx].talentAnswers = talentAnswers;
+  users[idx].talentLevel = talentLevel; // 1~5단계
+  writeUsers(users);
+  res.json({ message: "저장 완료" });
+});
+
 // 서버 시작
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`서버가 ${PORT}번 포트에서 실행 중입니다.`);
