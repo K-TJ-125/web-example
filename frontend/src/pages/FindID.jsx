@@ -23,7 +23,7 @@ function FindID() {
 
   function handleCloseComplete() {
     setIsComplete(false);
-    navigate("/hackerton");
+    navigate("/login");
   }
 
   return (
