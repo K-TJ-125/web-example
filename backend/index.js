@@ -1,4 +1,5 @@
 
+
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -359,6 +360,20 @@ app.post("/api/rooms/:roomId/join", (req, res) => {
     return res.status(400).json({ message: "이미 게스트가 입장한 방입니다." });
   }
   rooms[idx].guestEmail = guestEmail;
+  writeRooms(rooms);
+  res.json({ success: true });
+});
+
+
+// 방 삭제 API (호스트만 삭제 가능)
+app.delete("/api/rooms/:roomId", (req, res) => {
+  const { roomId } = req.params;
+  let rooms = readRooms();
+  const idx = rooms.findIndex((r) => String(r.id) === String(roomId));
+  if (idx === -1) {
+    return res.status(404).json({ message: "방을 찾을 수 없습니다." });
+  }
+  rooms.splice(idx, 1);
   writeRooms(rooms);
   res.json({ success: true });
 });
