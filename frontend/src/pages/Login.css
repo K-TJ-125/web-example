@@ -1,0 +1,251 @@
+.hackerton-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 60px auto;
+    padding: 32px 24px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+.hackerton-container h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 32px;
+    color: #222;
+}
+
+.login-form {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.input-fields {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.form-group label {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.form-group input {
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fafbfc;
+    transition: border 0.2s;
+    outline: none;
+}
+
+.form-group input:focus {
+    border: 1.5px solid #007aff;
+    background: #fff;
+}
+
+.login-button {
+    padding: 12px 24px;
+    background: linear-gradient(90deg, #007aff 60%, #00c6fb 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,122,255,0.08);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.login-button:hover {
+    background: linear-gradient(90deg, #005ecb 60%, #0096c7 100%);
+    box-shadow: 0 4px 16px rgba(0,122,255,0.12);
+}
+
+.links {
+    margin-top: 24px;
+    text-align: center;
+}
+
+.links p {
+    margin: 8px 0;
+}
+
+.links a {
+    color: #007aff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.links a:hover {
+    color: #005ecb;
+}
+.input-fields.vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+}
+
+.login-button.middle {
+    align-self: center;
+    margin: 0;
+}
+
+.nexon-style {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    max-width: 420px;
+    margin: 60px auto;
+    padding: 40px 32px 24px 32px;
+    text-align: center;
+    font-family: 'Pretendard', 'Noto Sans KR', Arial, sans-serif;
+}
+
+.logo {
+    font-family: 'Montserrat', 'Pretendard', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-bottom: 32px;
+}
+
+.login-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid #eee;
+}
+
+.login-tabs button {
+    background: none;
+    border: none;
+    font-size: 1.05rem;
+    color: #888;
+    padding: 12px 0 10px 0;
+    cursor: pointer;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-bottom 0.2s;
+}
+
+.login-tabs button.active {
+    color: #222;
+    border-bottom: 2px solid #222;
+}
+
+.nexon-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.nexon-input {
+    padding: 16px 14px;
+    font-size: 1.08rem;
+    border: 1.5px solid #eee;
+    border-radius: 8px;
+    background: #fafbfc;
+    transition: border 0.2s;
+    outline: none;
+}
+
+.nexon-input:focus {
+    border: 1.5px solid #222;
+    background: #fff;
+}
+
+.nexon-options {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: -8px;
+}
+
+.keep-login {
+    font-size: 0.98rem;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.nexon-login-btn {
+    width: 100%;
+    padding: 16px 0;
+    background: #3182f6; /* Toss 메인 블루 */
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s;
+}
+
+.nexon-login-btn:hover {
+    background: #2563eb; /* 더 진한 Toss 블루 */
+}
+
+.nexon-links {
+    margin-top: 18px;
+    font-size: 0.98rem;
+    color: #888;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.nexon-links a, .nexon-links span {
+    color: #888;
+    text-decoration: none;
+    font-weight: 400;
+    transition: color 0.2s;
+}
+
+.nexon-links a:hover {
+    color: #007aff;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: #fff;
+    padding: 32px 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    text-align: center;
+    min-width: 240px;
+}
