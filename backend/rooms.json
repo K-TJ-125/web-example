@@ -28,7 +28,7 @@
     "talent": "일식",
     "hostEmail": "host4@school.ac.kr",
     "hostTalentLevel": 2,
-    "guestEmail": "",
+    "guestEmail": "2234@school.ac.kr",
     "guestTalent": "한식"
   },
   {
@@ -47,7 +47,7 @@
     "guestEmail": "",
     "guestTalent": "KBO"
   },
-   {
+  {
     "id": 7,
     "talent": "일본애니",
     "hostEmail": "host7@school.ac.kr",
@@ -55,7 +55,7 @@
     "guestEmail": "",
     "guestTalent": "한국애니"
   },
-   {
+  {
     "id": 8,
     "talent": "EPL",
     "hostEmail": "host8@school.ac.kr",
@@ -63,7 +63,7 @@
     "guestEmail": "",
     "guestTalent": "K리그"
   },
-   {
+  {
     "id": 9,
     "talent": "불어",
     "hostEmail": "host9@school.ac.kr",
@@ -71,7 +71,7 @@
     "guestEmail": "",
     "guestTalent": "한국어"
   },
-   {
+  {
     "id": 10,
     "talent": "MLB",
     "hostEmail": "host10@school.ac.kr",
@@ -79,7 +79,7 @@
     "guestEmail": "",
     "guestTalent": "KBO"
   },
-   {
+  {
     "id": 11,
     "talent": "스페인어",
     "hostEmail": "host11@school.ac.kr",
@@ -87,7 +87,7 @@
     "guestEmail": "",
     "guestTalent": "한국어"
   },
-   {
+  {
     "id": 12,
     "talent": "중식",
     "hostEmail": "host12@school.ac.kr",
@@ -95,7 +95,7 @@
     "guestEmail": "",
     "guestTalent": "한식"
   },
-   {
+  {
     "id": 13,
     "talent": "이집트 역사",
     "hostEmail": "host13@school.ac.kr",
@@ -103,7 +103,7 @@
     "guestEmail": "",
     "guestTalent": "한국사"
   },
-   {
+  {
     "id": 14,
     "talent": "J-POP",
     "hostEmail": "host14@school.ac.kr",
@@ -111,7 +111,7 @@
     "guestEmail": "",
     "guestTalent": "K-POP"
   },
-   {
+  {
     "id": 15,
     "talent": "일본 관광지",
     "hostEmail": "host15@school.ac.kr",
@@ -119,7 +119,7 @@
     "guestEmail": "",
     "guestTalent": "한국 관광지"
   },
-   {
+  {
     "id": 16,
     "talent": "일본사",
     "hostEmail": "host6@school.ac.kr",

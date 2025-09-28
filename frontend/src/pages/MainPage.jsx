@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MainPage.css";
+import TalentTest from "./TalentTest";
 
 function MainPage() {
   const [talentInfo, setTalentInfo] = useState(null);
