@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import TalentTest from "./TalentTest";
 import { useNavigate } from "react-router-dom";
 import "./MainPage.css";
 
@@ -8,6 +7,8 @@ function MainPage() {
   const [rooms, setRooms] = useState([]);
   const [searchGuestTalent, setSearchGuestTalent] = useState("");
   const [searchResultRoom, setSearchResultRoom] = useState(null);
+  const [guestTalentBackground, setGuestTalentBackground] = useState("");
+  const [isLoadingBackground, setIsLoadingBackground] = useState(false);
   const [, setSearchError] = useState("");
   const userEmail = localStorage.getItem("userEmail");
   const [userName, setUserName] = useState(localStorage.getItem("userName"));
@@ -202,74 +203,127 @@ function MainPage() {
                 onChange={(e) => setSearchGuestTalent(e.target.value)}
                 style={{ width: "100%" }}
               />
-            </div>
-            <button
-              className="search-btn"
-              onClick={async () => {
-                if (!userEmail) {
-                  requireLogin();
-                  return;
-                }
-                setSearchError("");
-                setSearchResultRoom(null);
-                if (!searchGuestTalent.trim()) {
-                  setSearchError("궁금한 재능을 입력하세요.");
-                  return;
-                }
-                if (!talentInfo || !talentInfo.talent) {
-                  setSearchError(
-                    "내가 줄 수 있는 재능 정보가 없습니다. 먼저 재능을 등록하세요."
-                  );
-                  return;
-                }
-                const found = rooms.find(
-                  (room) =>
-                    room.talent === searchGuestTalent.trim() &&
-                    room.guestTalent === talentInfo.talent
-                );
-                if (found) {
-                  setSearchResultRoom(found);
-                  return;
-                }
-                if (
-                  !window.confirm(
-                    "해당 조건의 방이 없습니다. 방을 생성하시겠습니까?"
-                  )
-                ) {
-                  setSearchError("방이 없습니다. 방 생성을 취소했습니다.");
-                  return;
-                }
-                try {
-                  const res = await fetch(
-                    "http://localhost:3000/api/find-or-create-room",
-                    {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({
-                        talent: talentInfo.talent,
-                        guestTalent: searchGuestTalent.trim(),
-                      }),
+              <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
+                <button
+                  className="search-btn"
+                  style={{ minWidth: 100 }}
+                  disabled={isLoadingBackground || !searchGuestTalent.trim()}
+                  onClick={async () => {
+                    if (!searchGuestTalent.trim()) return;
+                    setIsLoadingBackground(true);
+                    setGuestTalentBackground("");
+                    try {
+                      const res = await fetch(
+                        "http://localhost:3000/api/knowledge-bot",
+                        {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({
+                            talent: searchGuestTalent.trim(),
+                          }),
+                        }
+                      );
+                      const data = await res.json();
+                      setGuestTalentBackground(data.background || "");
+                    } catch {
+                      setGuestTalentBackground("");
+                    } finally {
+                      setIsLoadingBackground(false);
                     }
-                  );
-                  const data = await res.json();
-                  if (res.ok && data.room) {
-                    setSearchResultRoom(data.room);
-                    fetch("http://localhost:3000/api/rooms")
-                      .then((res) => res.json())
-                      .then((data) => {
-                        if (Array.isArray(data.rooms)) setRooms(data.rooms);
-                      });
-                  } else {
-                    setSearchError(data.message || "방 생성에 실패했습니다.");
-                  }
-                  // eslint-disable-next-line no-unused-vars
-                } catch (e) {
-                  setSearchError("방 생성 중 오류가 발생했습니다.");
-                }
-              }}
-            >
-              찾기
-            </button>
+                  }}
+                >
+                  사전 지식 검색
+                </button>
+                <button
+                  className="search-btn"
+                  style={{ minWidth: 100 }}
+                  disabled={isLoadingBackground}
+                  onClick={async () => {
+                    if (!userEmail) {
+                      requireLogin();
+                      return;
+                    }
+                    setSearchError("");
+                    setSearchResultRoom(null);
+                    // 방 검색 시 배우고 싶은 재능 입력이 공백이면 alert
+                    if (!searchGuestTalent.trim()) {
+                      alert("배우고 싶은 재능을 입력해주세요.");
+                      return;
+                    }
+                    if (!talentInfo || !talentInfo.talent) {
+                      setSearchError(
+                        "내가 줄 수 있는 재능 정보가 없습니다. 먼저 재능을 등록하세요."
+                      );
+                      return;
+                    }
+                    const found = rooms.find(
+                      (room) =>
+                        room.talent === searchGuestTalent.trim() &&
+                        room.guestTalent === talentInfo.talent
+                    );
+                    if (found) {
+                      setSearchResultRoom(found);
+                      return;
+                    }
+                    if (
+                      !window.confirm(
+                        "해당 조건의 방이 없습니다. 방을 생성하시겠습니까?"
+                      )
+                    ) {
+                      setSearchError("방이 없습니다. 방 생성을 취소했습니다.");
+                      return;
+                    }
+                    try {
+                      const res = await fetch(
+                        "http://localhost:3000/api/find-or-create-room",
+                        {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({
+                            talent: talentInfo.talent,
+                            guestTalent: searchGuestTalent.trim(),
+                          }),
+                        }
+                      );
+                      const data = await res.json();
+                      if (res.ok && data.room) {
+                        // 방 생성 후 검색 결과 방 목록이 아닌 전체 방 목록으로 돌아가게 처리
+                        setSearchResultRoom(null);
+                        fetch("http://localhost:3000/api/rooms")
+                          .then((res) => res.json())
+                          .then((data) => {
+                            if (Array.isArray(data.rooms)) setRooms(data.rooms);
+                          });
+                      } else {
+                        setSearchError(
+                          data.message || "방 생성에 실패했습니다."
+                        );
+                      }
+                      // eslint-disable-next-line no-unused-vars
+                    } catch (e) {
+                      setSearchError("방 생성 중 오류가 발생했습니다.");
+                    }
+                  }}
+                >
+                  방 검색
+                </button>
+              </div>
+              {/* 배우고 싶은 재능에 대한 배경지식 안내 */}
+              <div
+                style={{
+                  marginTop: 10,
+                  minHeight: 32,
+                  color: "#333",
+                  fontSize: 15,
+                }}
+              >
+                {isLoadingBackground ? (
+                  <span style={{ color: "#aaa" }}>배경지식 불러오는 중...</span>
+                ) : (
+                  guestTalentBackground && <span>{guestTalentBackground}</span>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -432,6 +486,7 @@ function MainPage() {
                         } else {
                           alert("방 삭제 실패");
                         }
+                        // eslint-disable-next-line no-unused-vars
                       } catch (err) {
                         alert("방 삭제 중 오류 발생");
                       }

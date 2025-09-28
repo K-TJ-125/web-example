@@ -112,19 +112,14 @@ app.post("/api/register", (req, res) => {
 // 로그인
 app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
-  console.log("[로그인 시도] 프론트에서 받은 값:", { email, password });
   if (!email || !password) {
-    console.log("[로그인 실패] 필수 정보 누락");
     return res.status(400).json({ message: "필수 정보 누락" });
   }
   const users = readUsers();
-  console.log("[로그인] user.json 전체:", users);
   const user = users.find((u) => u.email === email && u.password === password);
   if (!user) {
-    console.log("[로그인 실패] 일치하는 사용자 없음");
     return res.status(401).json({ message: "이메일 또는 비밀번호 오류" });
   }
-  console.log("[로그인 성공]", user);
   // 실제 서비스는 JWT 등 토큰 발급
   res.status(200).json({
     message: "로그인 성공",

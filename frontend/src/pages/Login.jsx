@@ -27,6 +27,7 @@ function Login() {
         const data = await res.json();
         setAlertMsg(data.message || "로그인 실패");
       }
+    // eslint-disable-next-line no-unused-vars
     } catch (err) {
       setAlertMsg("서버 오류");
     }
@@ -64,8 +65,6 @@ function Login() {
         </form>
         <div className="simple-links">
           <a href="/register">회원가입</a>
-          <span>·</span>
-          <a href="/find-id">아이디 찾기</a>
           <span>·</span>
           <a href="/find-password">비밀번호 찾기</a>
         </div>

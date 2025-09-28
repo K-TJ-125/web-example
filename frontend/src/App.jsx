@@ -2,7 +2,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import FindId from "./pages/FindId";
 import FindPassword from "./pages/FindPassword";
 import MainPage from './pages/MainPage';
 
@@ -15,7 +14,6 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/find-id" element={<FindId />} />
         <Route path="/find-password" element={<FindPassword />} />
       </Routes>
     </BrowserRouter>
